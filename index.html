@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Atif Mobile - Premium Tech Store</title>
+    <style>
+        :root {
+            --primary: #25D366; /* WhatsApp Green */
+            --easypaisa: #7cc043; /* EasyPaisa Green */
+            --dark: #0f172a; 
+            --light: #f8fafc;
+            --accent: #3b82f6; 
+            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--light);
+            color: #1e293b;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* Top Announcement Bar */
+        .promo-bar {
+            background: linear-gradient(90deg, #ef4444, #f59e0b);
+            color: white;
+            text-align: center;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Full Screen Mandatory Login Gate */
+        .login-gate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?ixlib=rb-4.0.3') center/cover no-repeat;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .login-box h2 span { color: var(--primary); }
+
+        .login-box p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 1rem;
+            background-color: #f8fafc;
+            outline: none;
+        }
+
+        .form-group input:focus { border-color: var(--accent); background: white; }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content Styling (Hidden Before Login) */
+        .main-content {
+            filter: blur(10px);
+            pointer-events: none;
+            transition: filter 0.5s ease;
+        }
+
+        /* Top Header */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0; z-index: 100;
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px;}
+        .logo span { color: var(--primary); }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .offer-badge-btn {
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+        }
+
+        .ep-badge-btn {
+            background: var(--easypaisa);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+            100% { transform: scale(1); }
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: var(--gradient);
+            padding: 35px 20px;
+            text-align: center;
+            color: white;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
+        .hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; }
+        .hero p { font-size: 0.85rem; background: rgba(255,255,255,0.1); display: inline-block; padding: 5px 12px; border-radius: 20px; }
+
+        /* Grid */
+        .container { padding: 25px 15px; }
+        .section-title { font-size: 1.25rem; margin-bottom: 20px; font-weight: 800; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        /* Dynamic 30% OFF Badge */
+        .discount-badge {
+            position: absolute;
+            top: 10px; left: 10px;
+            background: #ef4444; color: white;
+            font-size: 0.65rem; font-weight: 800;
+            padding: 4px 8px; border-radius: 20px;
+            z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .card-img-wrap {
+            height: 140px;
+            width: 100%;
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .product-title { font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 4px;}
+        .price { font-weight: 800; color: var(--accent); font-size: 0.85rem; margin-bottom: 10px; }
+
+        .btn-buy {
+            display: block; background-color: var(--primary); color: white; text-decoration: none;
+            padding: 10px 5px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-align: center;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Popups / Modals */
+        .popup-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            justify-content: center; align-items: center; z-index: 10000; padding: 20px;
+        }
+        .popup-content {
+            background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 350px;
+            text-align: center; position: relative;
+        }
+        .popup-close { position: absolute; top: 12px; right: 18px; font-size: 1.4rem; cursor: pointer; color: #64748b; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+            background-color: white; display: flex; justify-content: space-around; align-items: center;
+            border-top: 1px solid #e2e8f0; z-index: 99; box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748b; text-decoration: none; font-size: 0.75rem; background: none; border: none; width: 50%; }
+        .nav-item.active { color: var(--accent); font-weight: 700; }
+        .nav-icon { font-size: 1.2rem; margin-bottom: 2px; }
+
+        footer { text-align: center; padding: 20px; color: #64748b; font-size: 0.75rem; background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+
+    <div class="promo-bar">🔥 TOP 10 CUSTOMERS OFFER: FLAT 30% OFF TODAY! 🎉</div>
+
+    <div class="login-gate" id="loginGate">
+        <div class="login-box">
+            <h2>Atif <span>Mobile</span></h2>
+            <p>Please Sign In to browse our store</p>
+            <form onsubmit="unlockStore(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="form-submit">Unlock Store</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-content" id="storeContent">
+        <header>
+            <div class="logo">Atif <span>Mobile</span></div>
+            <div class="header-buttons">
+                <button class="ep-badge-btn" onclick="toggleModal('easypaisaModal')">🟢 Easypaisa</button>
+                <button class="offer-badge-btn" onclick="toggleModal('offerModal')">🎁 Offers</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>Atif Mobile Store</h1>
+            <p>⚡ Order via WhatsApp • Pay via Easypaisa</p>
+        </section>
+
+        <main class="container">
+            <h2 class="section-title">🔥 Premium Mobile Accessories</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <span class="discount-badge">30% OFF</span>
+                    <div class="card-img-wrap">
+                        <img class="card-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Headphones">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-title">Headphones</h3>
+                        <p class="price">Rs. 200 - 600</p>
+                        <a href="https://wa.me/923194651656?text=Hi%20Atif%20Mobile,%20I%20want%20to%20order%20Headphones.%20I%20claim%20the%2030%25%20Top%2010%20Customer%20Offer." target="_blank" class="btn-buy">Order Now</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="discount-badge">30% OFF</span>
+                    <div class="card-img-wrap">
+                        <img class="card-img" src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" alt="Earbuds">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-title">Wireless Earbuds</h3>
+                        <p class="price">Rs. 2k - 4.5k</p>
+                        <a href="https://wa.me/923194651656?text=Hi%20Atif%20Mobile,%20I%20want%20to%20order%20Earbuds.%20I%20claim%20the%2030%25%20Top%2010%20Customer%20Offer." target="_blank" class="btn-buy">Order Now</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="discount-badge">30% OFF</span>
+                    <div class="card-img-wrap">
+                        <img class="card-img" src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400" alt="Fast Charger">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-title">Fast Charger</h3>
+                        <p class="price">Rs. 1k - 2.5k</p>
+                        <a href="https://wa.me/923194651656?text=Hi%20Atif%20Mobile,%20I%20want%20to%20order%20a%20Fast%20Charger.%20I%20claim%20the%2030%25%20Top%2010%20Customer%20Offer." target="_blank" class="btn-buy">Order Now</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="discount-badge">30% OFF</span>
+                    <div class="card-img-wrap">
+                        <img class="card-img" src="https://images.unsplash.com/photo-1542393545-10f5cde2c810?w=400" alt="Data Cable">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-title">Data Cables</h3>
+                        <p class="price">Rs. 300 - 750</p>
+                        <a href="https://wa.me/923194651656?text=Hi%20Atif%20Mobile,%20I%20want%20to%20order%20Data%20Cables.%20I%20claim%20the%2030%25%20Top%2010%20Customer%20Offer." target="_blank" class="btn-buy">Order Now</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="discount-badge">30% OFF</span>
+                    <div class="card-img-wrap">
+                        <img class="card-img" src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400" alt="Mobile Cover">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-title">Mobile Covers</h3>
+                        <p class="price">Rs. 300 - 600</p>
+                        <a href="https://wa.me/923194651656?text=Hi%20Atif%20Mobile,%20I%20want%20to%20order%20a%20Mobile%20Cover.%20I%20claim%20the%2030%25%20Top%2010%20Customer%20Offer." target="_blank" class="btn-buy">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </button>
+            <a href="https://wa.me/923194651656" target="_blank" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span>Contact</span>
+            </a>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Atif Mobile • Premium Quality</p>
+        </footer>
+    </div>
+
+    <div class="popup-modal" id="offerModal">
+        <div class="popup-content">
+            <span class="popup-close" onclick="toggleModal('offerModal')">&times;</span>
+            <h2 style="color: #ef4444; font-weight:800; margin-bottom: 10px;">🎉 Top 10 Offers!</h2>
+            <p style="font-size:0.95rem; line-height: 1.5; margin-bottom: 15px; color:#334155;">
+                🤩 <strong>FLAT 30% OFF</strong> for our first 10 lucky customers!<br><br>
+                🔥 Hurry up and place your order on WhatsApp to lock your discount code.
+            </p>
+            <button class="form-submit" style="background: var(--primary);" onclick="toggleModal('offerModal')">Claim Now!</button>
+        </div>
+    </div>
+
+    <div class="popup-modal" id="easypaisaModal">
+        <div class="popup-content">
+            <span class="popup-close" onclick="toggleModal('easypaisaModal')">&times;</span>
+            <h2 style="color: var(--easypaisa); font-weight:800; margin-bottom: 10px;">🟢 Easypaisa Payment</h2>
+            <p style="font-size:1rem; line-height: 1.6; margin-bottom: 15px; color:#334155;">
+                آپ اپنے آرڈر کی پیمنٹ اس نمبر پر بھیج سکتے ہیں:<br><br>
+                <strong>Number:</strong> <span style="font-size:1.2rem; color:var(--dark); font-weight: 700;">03105153711</span><br>
+                <strong>Account Title:</strong> Atif Mobile / Muhammad Atif
+            </p>
+            <button class="form-submit" style="background: var(--easypaisa);" onclick="toggleModal('easypaisaModal')">Okay</button>
+        </div>
+    </div>
+
+    <script>
+        function unlockStore(event) {
+            event.preventDefault();
+            const gate = document.getElementById('loginGate');
+            gate.style.opacity = '0';
+            setTimeout(() => gate.style.display = 'none', 500);
+
+            const content = document.getElementById('storeContent');
+            content.style.filter = 'none';
+            content.style.pointerEvents = 'auto';
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>
